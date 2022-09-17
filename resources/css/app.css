@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base{
+
+    h1{
+        @apply mt-5 text-3xl font-bold text-black;
+    }
+
+    button{
+        @apply  bg-blue-600 mt-2 rounded px-4 py-2  text-white hover:bg-blue-400 duration-150;
+    }
+
+}
