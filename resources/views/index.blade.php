@@ -9,6 +9,19 @@
 </head>
 
 <body class="bg-white">
+    <!-- Logout -->
+
+<div class="flex bg-white shadow justify-end">
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+
+        <button type="submit" class="underline text-sm py-5 my-auto mr-11 text-gray-600 hover:text-gray-900">
+            {{ __('Log Out') }}
+        </button>
+    </form>
+</div>
+
+<!-- Logout -->
     <div class="mt-10 bg-slate-200 rounded-xl w-1/2 px-6 py-5 mx-auto">
         <h1 class="text-center mb-10">MoneyTracker App</h1>
         <div class="container">
@@ -18,18 +31,20 @@
                     <label for="Category" class="font-bold">Category</label>
                     <input readonly type="text" id="dropdown" class="placeholder:text-black cursor-pointer hover:bg-slate-800 hover:text-white duration-100 mt-2 bg-white w-full py-2 px-3 placeholder:pl-4 text-black text-left rounded" placeholder="Pick a category">
                     <input id="trueVal" type="hidden" name="category" value=""> 
+                    <input type="hidden" name="category" value="{{ auth()->user()->id }}">
                     <input id="categorystrVal" type="hidden" name="categorystring" value="">
                     <!-- Will send a hidden value of each category-->
                 </div>
                 <div class="w-full">
                     <label for="ItemDescription" class="font-bold">Item Description</label>
                     <input type="text" name="content" class="mt-2 bg-white w-full py-2 px-3 placeholder:pl-4 placeholder:text-slate-400 rounded" placeholder="Item description" required>
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" required>
                 </div>
                 <div class="w-full">
                     <label for="Amount" class="font-bold">Amount</label>
                     <input type="text" name="amount" class="mt-2 bg-white w-full py-2 px-3 placeholder:pl-4 placeholder:text-slate-400 rounded" placeholder="Enter Amount" required>
                 </div>
-                <div class="full">
+                <div>
                     <label for="Add" class="font-bold">Add</label>
                     <button class="bg-blue-600" type="submit">Add</button>
                 </div>
@@ -87,8 +102,7 @@
         <a href="{{route ('showallist')}}"><button class="w-full mt-10">Show Dashboard Expenses Category</button> </a>
     </div>
 
-
-    <div class="container absolute top-10 left-32">
+    <div class="container absolute top-36 left-32">
         <form action="{{route('store')}}" method="POST">
             @csrf
             <h1>Auto input GAS</h1>
@@ -96,8 +110,7 @@
             <input type="hidden" name="content" value="Some Item">
             <input type="hidden" name="category" value="1">
             <input type="hidden" name="categorystring" value="Gas">
-            
-            
+            <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
             <button id="numbergenerator"class="px-4 py-2 bg-blue-500"type="submit">Fill random values</button>
         </form>
    </div>

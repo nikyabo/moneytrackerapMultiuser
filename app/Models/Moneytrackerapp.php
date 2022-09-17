@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Moneytrackerapp extends Model
 {
     use HasFactory;
-    protected $fillable=['amount','content','category','categorystring'];
+    protected $fillable=['amount','content','category','categorystring','user_id'];
 }

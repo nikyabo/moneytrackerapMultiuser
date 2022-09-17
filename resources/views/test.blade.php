@@ -12,7 +12,7 @@
         <form action="{{route('store')}}" method="POST">
         <input type="hidden" name="amount" value="50">
         <input type="hidden" name="content" value="Hello there">
-        <input type="hidden" name="category" value="1">
+        <input type="hidden" name="category" value="{{ auth()->user->id }}">
         <button type="submit">Test</button>
         </form>
    </div> 

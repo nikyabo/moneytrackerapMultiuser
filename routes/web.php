@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MoneytrackerappController;
 use App\Http\Controllers\Showalllist;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,15 +17,13 @@ use App\Http\Controllers\Showalllist;
 */
 
 // Route::get('/', function () {
-//     return view('index');
+//     return view('welcome');
 // });
 
-// Route::get('/test', function () {
-//     return view('test');
-// });
-
-Route::get('/',[MoneytrackerappController::class,'index'])->name('index');
-Route::post('/',[MoneytrackerappController::class,'store'])->name('store');
-Route::delete('/{moneytrackerapp:id}',[MoneytrackerappController::class,'destroy'])->name('destroy');
+Route::get('/', [MoneytrackerappController::class,'index'])->middleware(['auth'])->name('index');
+Route::post('/',[MoneytrackerappController::class,'store'])->middleware(['auth'])->name('store');
+Route::delete('/{moneytrackerapp:id}',[MoneytrackerappController::class,'destroy'])->middleware(['auth'])->name('destroy');
 
 Route::get('/showalllist',[Showalllist::class,'index'])->name('showallist');
+
+require __DIR__.'/auth.php';

@@ -17,12 +17,12 @@ class MoneytrackerappController extends Controller
     public function index()
     {
         //
-        $moneytrackerapps= Moneytrackerapp::all()->sortByDesc('created_at');
-        $sumofexpenses = Moneytrackerapp::all()->sum('amount');
-        $sumofgas = Moneytrackerapp::where('category','=','1')->sum('amount');
-        $sumoffood = Moneytrackerapp::where('category','=','2')->sum('amount');
-        $sumofbills = Moneytrackerapp::where('category','=','3')->sum('amount');
-        $sumofgroceries = Moneytrackerapp::where('category','=','4')->sum('amount');
+        $moneytrackerapps= Moneytrackerapp::where('user_id',auth()->user()->id)->get()->sortByDesc('created_at');
+        $sumofexpenses = Moneytrackerapp::where('user_id',auth()->user()->id)->get()->sum('amount');
+        $sumofgas = Moneytrackerapp::where('category','=','1')->where('user_id',auth()->user()->id)->get()->sum('amount');
+        $sumoffood = Moneytrackerapp::where('category','=','2')->where('user_id',auth()->user()->id)->get()->sum('amount');
+        $sumofbills = Moneytrackerapp::where('category','=','3')->where('user_id',auth()->user()->id)->get()->sum('amount');
+        $sumofgroceries = Moneytrackerapp::where('category','=','4')->where('user_id',auth()->user()->id)->get()->sum('amount');
         return view('index',compact('moneytrackerapps','sumofexpenses','sumofgas','sumoffood','sumofbills','sumofgroceries'));
     }
 
@@ -51,6 +51,7 @@ class MoneytrackerappController extends Controller
             'category'=>'required',
             'content'=>'required',
             'categorystring'=>'required',
+            'user_id'=>'required',
         ]);
         Moneytrackerapp::create($data);
         return back();

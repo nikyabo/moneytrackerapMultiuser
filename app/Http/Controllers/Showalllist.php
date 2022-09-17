@@ -13,7 +13,7 @@ class Showalllist extends Controller
      */
     public function index()
     {
-        $showalllists = Moneytrackerapp::all();
+        $showalllists = Moneytrackerapp::where('user_id',auth()->user()->id)->get();
         return view('showalllist',compact('showalllists'));
     }
 

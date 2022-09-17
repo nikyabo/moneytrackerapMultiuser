@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('content');
             $table->integer('category');
             $table->string('categorystring');
+            $table->integer('user_id'); 
             $table->timestamps();
         });
     }
