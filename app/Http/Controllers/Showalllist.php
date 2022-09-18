@@ -13,8 +13,13 @@ class Showalllist extends Controller
      */
     public function index()
     {
-        $showalllists = Moneytrackerapp::where('user_id',auth()->user()->id)->get();
-        return view('showalllist',compact('showalllists'));
+        $showalllists= Moneytrackerapp::where('user_id',auth()->user()->id)->get()->sortByDesc('created_at');
+        $sumofexpenses = Moneytrackerapp::where('user_id',auth()->user()->id)->get()->sum('amount');
+        $sumofgas = Moneytrackerapp::where('category','=','1')->where('user_id',auth()->user()->id)->get()->sum('amount');
+        $sumoffood = Moneytrackerapp::where('category','=','2')->where('user_id',auth()->user()->id)->get()->sum('amount');
+        $sumofbills = Moneytrackerapp::where('category','=','3')->where('user_id',auth()->user()->id)->get()->sum('amount');
+        $sumofgroceries = Moneytrackerapp::where('category','=','4')->where('user_id',auth()->user()->id)->get()->sum('amount');
+        return view('showalllist',compact('showalllists','sumofexpenses','sumofgas','sumoffood','sumofbills','sumofgroceries'));
     }
 
     /**

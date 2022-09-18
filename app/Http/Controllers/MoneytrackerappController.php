@@ -47,11 +47,11 @@ class MoneytrackerappController extends Controller
         //
 
         $data = $request->validate([
-            'amount'=>'required',
+            'amount'=>'required|numeric|gt:0',
             'category'=>'required',
             'content'=>'required',
             'categorystring'=>'required',
-            'user_id'=>'required',
+            'user_id'=>'required|numeric|gt:0',
         ]);
         Moneytrackerapp::create($data);
         return back();

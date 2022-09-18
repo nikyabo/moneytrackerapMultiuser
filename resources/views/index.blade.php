@@ -11,41 +11,56 @@
 <body class="bg-white">
     <!-- Logout -->
 
-<div class="flex bg-white shadow justify-end">
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
+<div class="flex group bg-white shadow justify-end py-5">
+    <button id="hovermenu" class = "bg-green-500 my-auto mr-10">Hello , {{auth()->user()->name}}<i class="ml-2 fa-solid fa-caret-down"></i></button>
+            <!-- Dropdown -->
+    <div id="hovermenuitems" class="block w-auto px-4 py-4 shadow-xl bg-white rounded-xl absolute right-11 top-16">
+        <a href="{{route('showallist')}}">Dashboard</a>
+        <form method="POST" action="{{ route('logout') }}" class="mt-2">
+            @csrf
 
-        <button type="submit" class="underline text-sm py-5 my-auto mr-11 text-gray-600 hover:text-gray-900">
-            {{ __('Log Out') }}
-        </button>
-    </form>
+            <button type="submit" class="bg-red-500 full-width text-white  text-sm py-2 my-auto mr-11 hover:text-gray-900 hover:bg-red-300">
+                {{ __('Log Out') }}
+            </button>
+        </form>
+    </div>
+    <!-- Dropdown -->
 </div>
+<!--Entire Menu-->
 
-<!-- Logout -->
     <div class="mt-10 bg-slate-200 rounded-xl w-1/2 px-6 py-5 mx-auto">
         <h1 class="text-center mb-10">MoneyTracker App</h1>
+        @if ($errors->any())
+            <div class="ring-red-700 ring-1 bg-red-200 px-4 py-4 rounded-xl">
+                <p class="text-red-700 font-bold">Whoops. Something went wrong.</p>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="text-red-700">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container">
             <form class="flex flex-row gap-4" action="{{route('store')}}" method="POST" autocomplete="off">
                @csrf
                 <div class="w-full">
-                    <label for="Category" class="font-bold">Category</label>
-                    <input readonly type="text" id="dropdown" class="placeholder:text-black cursor-pointer hover:bg-slate-800 hover:text-white duration-100 mt-2 bg-white w-full py-2 px-3 placeholder:pl-4 text-black text-left rounded" placeholder="Pick a category">
+                    <label for="Category" class="font-bold">Category<span class="text-red-800">*</span></label>
+                    <input readonly type="text" id="dropdown" class="placeholder:text-black cursor-pointer hover:bg-slate-800 hover:text-white duration-100 mt-2 bg-white w-full py-2 px-3 placeholder:pl-4 text-black text-left rounded" placeholder="Pick a category" value="{{ old('categorystring') }}">
                     <input id="trueVal" type="hidden" name="category" value=""> 
-                    <input type="hidden" name="category" value="{{ auth()->user()->id }}">
-                    <input id="categorystrVal" type="hidden" name="categorystring" value="">
+                    <input id="categorystrVal" type="hidden" name="categorystring" value="{{ old('categorystring')}}">
                     <!-- Will send a hidden value of each category-->
                 </div>
                 <div class="w-full">
                     <label for="ItemDescription" class="font-bold">Item Description</label>
-                    <input type="text" name="content" class="mt-2 bg-white w-full py-2 px-3 placeholder:pl-4 placeholder:text-slate-400 rounded" placeholder="Item description" required>
+                    <input type="text" name="content" class="mt-2 bg-white w-full py-2 px-3 placeholder:pl-4 placeholder:text-slate-400 rounded" placeholder="Item description" value="{{ old('content') }}">
                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" required>
                 </div>
                 <div class="w-full">
-                    <label for="Amount" class="font-bold">Amount</label>
-                    <input type="text" name="amount" class="mt-2 bg-white w-full py-2 px-3 placeholder:pl-4 placeholder:text-slate-400 rounded" placeholder="Enter Amount" required>
+                    <label for="Amount" class="font-bold">Amount <span class="text-red-800">*</span></label>
+                    <input type="text" name="amount" class="mt-2 bg-white w-full py-2 px-3 placeholder:pl-4 placeholder:text-slate-400 rounded" placeholder="Enter Amount" required value="{{ old('amount') }}">
                 </div>
                 <div>
-                    <label for="Add" class="font-bold">Add</label>
+                    <label for="Add" class="font-bold">Action</label>
                     <button class="bg-blue-600" type="submit">Add</button>
                 </div>
                 </div>
@@ -102,7 +117,7 @@
         <a href="{{route ('showallist')}}"><button class="w-full mt-10">Show Dashboard Expenses Category</button> </a>
     </div>
 
-    <div class="container absolute top-36 left-32">
+    <!-- <div class="container absolute top-36 left-32">
         <form action="{{route('store')}}" method="POST">
             @csrf
             <h1>Auto input GAS</h1>
@@ -113,14 +128,28 @@
             <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
             <button id="numbergenerator"class="px-4 py-2 bg-blue-500"type="submit">Fill random values</button>
         </form>
-   </div>
+   </div> -->
 </body>
 <script>
     // Toggle function
     $(document).ready(function(){
         var widthValue2;
         var pos;
+        // Hover menu
+        $('#hovermenuitems').hide();
+        $('#hovermenu').on('click',function(){
+            $('#hovermenuitems').fadeToggle(250);
+            if(($('#hovermenuitems').is(':hover')&& $('#hovermenu').is(':hover'))){
+                $('#hovermenuitems').fadeToggle(250);
+            }
+            
+        });
         
+        // $('#hovermenu').hover(function(){
+        //     $('hovermenuitems').show();
+        // });
+
+        // Hover menu-end
         $('#dropdownitems').hide();
         $('#dropdown').on('click',function(){
             widthValue2 = $('#dropdown').width();

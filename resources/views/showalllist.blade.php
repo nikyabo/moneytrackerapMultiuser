@@ -9,10 +9,32 @@
 </head>
 
 <body class="bg-white">
-    
+<div class="flex group bg-white shadow justify-end py-5">
+    <button id="hovermenu" class = "bg-green-500 my-auto mr-10">Hello , {{auth()->user()->name}}<i class="ml-2 fa-solid fa-caret-down"></i></button>
+            <!-- Dropdown -->
+    <div id="hovermenuitems" class="block w-auto px-4 py-4 shadow-xl bg-white rounded-xl absolute right-11 top-16">
+        <a href="{{route('showallist')}}">Dashboard</a>
+        <form method="POST" action="{{ route('logout') }}" class="mt-2">
+            @csrf
+
+            <button type="submit" class="bg-red-500 full-width text-white  text-sm py-2 my-auto mr-11 hover:text-gray-900 hover:bg-red-300">
+                {{ __('Log Out') }}
+            </button>
+        </form>
+    </div>
+    <!-- Dropdown -->
+</div>
+<!--Entire Menu-->
     <div class="mt-10 bg-slate-200 rounded-xl w-1/2 px-6 py-5 mx-auto">
         <div class="container">
-        <h1 class="text-center mb-6"> Here is your list of expenses</h1>
+        <h1 class="text-center mb-6"> Here is all of your list of expenses</h1>
+            <div class="container text-lg font-bold text-center text-blue-500 underline mb-5">Your total expenses : {{$sumofexpenses}}</div>    
+            <div class="flex flex-row">
+                <div class="container text-sm mb-5 font-bold">Gas expenses : {{$sumofgas}}</div>
+                <div class="container text-sm mb-5 font-bold">Food expenses : {{$sumoffood}}</div>
+                <div class="container text-sm mb-5 font-bold">Bills expenses : {{$sumofbills}}</div>
+                <div class="container text-sm mb-5 font-bold">Groceries expenses : {{$sumofgroceries}}</div>
+            </div>
                 <table class="w-full auto text-center">
                     <thead class="bg-blue-900 text-white p-10">
                         <tr>
@@ -43,4 +65,17 @@
             </div>
     </div>
 </body>
+<script>
+    // Hovering scripts for menu
+    $(document).ready(function(){
+        $('#hovermenuitems').hide();
+        $('#hovermenu').on('click',function(){
+            $('#hovermenuitems').fadeToggle(250);
+            if(($('#hovermenuitems').is(':hover')&& $('#hovermenu').is(':hover'))){
+                $('#hovermenuitems').fadeToggle(250);
+            }
+            
+        });
+    });
+</script>
 </html>
